@@ -1,6 +1,6 @@
 import React from "react";
 
-import {DeleteIcon, EditIcon} from "../icons/customIcons";
+import {DeleteIcon, EditIcon} from "../../icons/customIcons";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 

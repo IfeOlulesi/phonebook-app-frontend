@@ -173,3 +173,11 @@ body {
   color: white;
   font-size: 20px;
 }
+
+.profile-pic {
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  background-color: aqua;
+  /* margin-right: 1em; */
+}
