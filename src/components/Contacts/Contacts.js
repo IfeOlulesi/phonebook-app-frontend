@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import contactService from "../../services/contacts";
-import { useAuth0 } from "@auth0/auth0-react";
-import { Link } from "react-router-dom";
+// import { useAuth0 } from "@auth0/auth0-react";
+
 
 import Filter from "./Filter";
 import AddContacts from "./AddContacts";
@@ -9,15 +9,8 @@ import ShowContacts from "./ShowContacts";
 import Notification from "./Notification";
 import FormDialog from "./FormDialog";
 
-// import Logout from "../Logout/Logout";
-
-import Button from '@material-ui/core/Button';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-
-
-const Contacts = () => {
-
+const Contacts = ({ user }) => {
+  
   const [contacts, setContacts] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
@@ -35,8 +28,7 @@ const Contacts = () => {
   });
 
   const [open, setOpen] = useState(false);
-  const [profilePicAnchorEl, setProfilePicAnchorEl] = useState(null);
-  const { logout } = useAuth0();
+ 
  
   useEffect(() => {
     contactService.getAll().then((allContacts) => setContacts(allContacts));
@@ -232,43 +224,11 @@ const Contacts = () => {
     handleClickOpen();
   };
 
-  const handleProfilePicClick = (event) => {
-    setProfilePicAnchorEl(event.currentTarget);
-  };
-
-  const handleProfilePicClose = () => {
-    setProfilePicAnchorEl(null);
-  };
-
-  const handleLogout = () => logout({ returnTo: window.location.origin })
 
 
   
   return (
     <>
-      <div className="header">
-        <h1 className="page-title" >Phonebook</h1>
-        <div>
-          {/* <p className="creator-credits">{ <Logout />} </p> */}
-          <Button onClick={handleProfilePicClick}>
-            <div className="profile-pic"> </div>
-          </Button>
-          <Menu
-            id="simple-menu"
-            anchorEl={profilePicAnchorEl}
-            keepMounted
-            open={Boolean(profilePicAnchorEl)}
-            onClose={handleProfilePicClose}
-          >
-            <MenuItem>
-              <Link to="/profile">Profile</Link>
-            </MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            {/* <MenuItem onClick={handleProfilePicClose}>My account</MenuItem> */}
-          </Menu>
-        </div>
-      </div>
-    
       <Notification message={notification} />
       <FormDialog 
         discardSave={discardSave} handleSave={handleSave} open={open} 
