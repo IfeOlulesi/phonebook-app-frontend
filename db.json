@@ -1,0 +1,48 @@
+{
+  "accounts": [
+    {
+      "username": "ifeolulesi@gmail.com",
+      "password": "admin1",
+      "id": 1,
+      "contacts": [
+        {
+          "name": "Chinedu",
+          "number": "080273627384",
+          "id": 27
+        },
+        {
+          "name": "Charles",
+          "number": "233",
+          "id": 28
+        },
+        {
+          "name": "Maxwell Obi",
+          "number": "123",
+          "id": 30
+        }
+      ]
+    },
+    {
+      "username": "shemmylane@yahoo.com",
+      "password": "admin2",
+      "id": 2,
+      "contacts": [
+        {
+          "name": "Bob Gifiny",
+          "number": "12323",
+          "id": 24
+        },
+        {
+          "name": "Esther Babs",
+          "number": "11111",
+          "id": 25
+        },
+        {
+          "name": "Chuks",
+          "number": "02028374632",
+          "id": 26
+        }
+      ]
+    }
+  ]
+}
