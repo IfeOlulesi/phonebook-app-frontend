@@ -29,6 +29,11 @@ const ShowContacts = ({ contacts, filterQuery, deleteContact, editContact }) => 
       .includes(filterQuery.toLowerCase())
   )
 
+  let sortedFilteredContacts;
+  if (filteredContacts.length > 0) {
+    sortedFilteredContacts = filteredContacts.sort((a, b) => a.name > b.name ? 1 : -1)
+  }
+
   return (
     <>
       <h2 style={{ color: "white" }}>Contacts</h2>
@@ -49,9 +54,9 @@ const ShowContacts = ({ contacts, filterQuery, deleteContact, editContact }) => 
             </div>
           }
           {
-            filteredContacts.length > 0 &&
+            sortedFilteredContacts.length > 0 &&
             
-            filteredContacts.map((el) => (
+            sortedFilteredContacts.map((el) => (
               <tr key={el.name}>
                 <td> {el.name} </td>
                 <td> {el.number} </td>
