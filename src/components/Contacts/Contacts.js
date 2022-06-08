@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import contactService from "../../services/contacts";
-// import { useAuth0 } from "@auth0/auth0-react";
-
 
 import Filter from "./Filter";
 import AddContacts from "./AddContacts";
@@ -9,8 +7,12 @@ import ShowContacts from "./ShowContacts";
 import Notification from "./Notification";
 import FormDialog from "./FormDialog";
 
+import { useAuth0 } from "@auth0/auth0-react";
+
 const Contacts = ({ user }) => {
+  // const { isLoading } = useAuth0();
   
+  const [accounts, setAccounts] = useState([]);
   const [contacts, setContacts] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
@@ -29,10 +31,16 @@ const Contacts = ({ user }) => {
 
   const [open, setOpen] = useState(false);
  
- 
-  useEffect(() => {
-    contactService.getAll().then((allContacts) => setContacts(allContacts));
+  useEffect(() => { 
+    contactService.getAll().then((allAccounts) => setAccounts(allAccounts));
   }, []);
+
+  useEffect(() => {
+    if (accounts.length > 0) {
+      setContacts(accounts.filter( el => el.username === user.email)[0].contacts)
+    }
+  }, [accounts])
+
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -43,8 +51,8 @@ const Contacts = ({ user }) => {
 
     if (newName === "" || newNumber === "") {
       alert("Name and Number fields can't be empty");
-    } 
-    else if (contactNameExists !== -1) {
+    }
+    else if (contactNameExists !== -1) { // if the name exists
       if (
         window.confirm(
           `${contacts[contactNameExists].name} is already added to the phonebook. Do you want to replace the old number with the new one?`
@@ -82,18 +90,32 @@ const Contacts = ({ user }) => {
       );
       setNewName("");
       setNewNumber("");
-    } else {
-      const newContact = {
-        name: newName,
-        number: newNumber,
-        id: contacts[contacts.length - 1].id + 1,
-      };
+    } else { //to add a new contact to an existing account
 
-      contactService.create(newContact).then((response) => {
+      const newContactDetails = {
+        username: user.email,
+        contacts: [
+          ...contacts,
+          {
+            name: newName,
+            number: newNumber,
+            id: contacts[contacts.length -1].id + 1
+          }
+        ]
+      }
+
+      const updateIdArray = accounts.filter(account => account.username = user.email)
+      let updateId = 0
+      if (updateIdArray.length > 0) {
+        updateId = updateIdArray[0].id;
+      }
+
+      contactService.update(updateId, newContactDetails).then((response) => {
+
         setNotification({
           status: "success",
           statusCode: response.status,
-          statusText: "Created Successfully!",
+          statusText: "Contact Added!!",
         });
         setTimeout(() => {
           setNotification({
@@ -101,8 +123,9 @@ const Contacts = ({ user }) => {
             status: null,
           });
         }, 2000);
-        setContacts(contacts.concat(response.data));
-      });
+
+        setContacts(response.contacts) 
+      })
 
       setNewName("");
       setNewNumber("");
@@ -177,8 +200,14 @@ const Contacts = ({ user }) => {
   }
 
   const handleSave = () => {
-    debugger
     const contactId = contacts.findIndex((el) => el.name === editContactDetails.oldName);
+
+    // payload = {
+    //   username: "",
+    //   contacts: [
+
+    //   ]
+    // }
 
     contactService
       .update(contacts[contactId].id, {
@@ -211,7 +240,6 @@ const Contacts = ({ user }) => {
   };
 
   const editContact = (id) => {
-    debugger
     const oldContactDetails = contacts.filter(el => el.id === id)[0]
     setEditContactDetails({
       ...editContactDetails,
@@ -223,9 +251,6 @@ const Contacts = ({ user }) => {
     
     handleClickOpen();
   };
-
-
-
   
   return (
     <>

@@ -1,11 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import {DeleteIcon, EditIcon} from "../../icons/customIcons";
 import IconButton from "@material-ui/core/IconButton";
 import Tooltip from "@material-ui/core/Tooltip";
 
+import { CircularProgress } from '@material-ui/core'  
+
 const ShowContacts = ({ contacts, filterQuery, deleteContact, editContact }) => {
   // huge bug here: filter accepts name, number and id...fix this
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    if (contacts.length < 1) {
+      setTimeout(() => {
+        setIsLoading(false);
+      }, 7000);  
+    }
+    else if (contacts.length > 0) {
+      setIsLoading(false);
+    }
+  }, [contacts])
 
   let filteredContacts = contacts.filter((contact) => 
       JSON.stringify(contact)
@@ -25,7 +40,16 @@ const ShowContacts = ({ contacts, filterQuery, deleteContact, editContact }) => 
         </thead>
         <tbody>
           {
-            filteredContacts.length > 0 ?
+            isLoading === true && 
+            <div style={{
+              color: "white",
+              fontSize: "16px",
+            }}>
+              <CircularProgress />
+            </div>
+          }
+          {
+            filteredContacts.length > 0 &&
             
             filteredContacts.map((el) => (
               <tr key={el.name}>
@@ -41,14 +65,8 @@ const ShowContacts = ({ contacts, filterQuery, deleteContact, editContact }) => 
                 </td>
               </tr>
             ))
-
-            :
-
-            <div style={{
-              color: "white",
-              fontSize: "16px",
-            }}>No matching contact found</div>
           }
+          
 
         </tbody>
       </table>
