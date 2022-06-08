@@ -17,6 +17,7 @@ const Contacts = ({ user }) => {
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [filterQuery, setFilterQuery] = useState("");
+  const [editContactId, setEditContactId] = useState(0);
   const [editContactDetails, setEditContactDetails] = useState({
     oldName: "",
     oldNumber: 0,
@@ -91,7 +92,6 @@ const Contacts = ({ user }) => {
       setNewName("");
       setNewNumber("");
     } else { //to add a new contact to an existing account
-
       const newContactDetails = {
         username: user.email,
         contacts: [
@@ -111,7 +111,6 @@ const Contacts = ({ user }) => {
       }
 
       contactService.update(updateId, newContactDetails).then((response) => {
-
         setNotification({
           status: "success",
           statusCode: response.status,
@@ -123,7 +122,6 @@ const Contacts = ({ user }) => {
             status: null,
           });
         }, 2000);
-
         setContacts(response.contacts) 
       })
 
@@ -200,46 +198,61 @@ const Contacts = ({ user }) => {
   }
 
   const handleSave = () => {
-    const contactId = contacts.findIndex((el) => el.name === editContactDetails.oldName);
+    // save contact info after editing
+    const editContactIndex = contacts.findIndex(contact => contact.id === editContactId)
+    let bufferContacts = [...contacts]
+    bufferContacts[editContactIndex] = {
+      name: editContactDetails.newName,
+      number: editContactDetails.newNumber,
+      id: bufferContacts[editContactIndex].id,
+    }
 
-    // payload = {
-    //   username: "",
-    //   contacts: [
+    let accountId = 0
+    let accountSearch = accounts.find(account => account.username = user.email)
+    if (accountSearch !== undefined) {
+      accountId = accountSearch.id
+    }
 
-    //   ]
-    // }
+    console.log(bufferContacts)
+    
+    let payload = {
+      username: user.email,
+      contacts: bufferContacts,
+    }
 
-    contactService
-      .update(contacts[contactId].id, {
-        ...contacts[contactId],
-        name: editContactDetails.newName,
-        number: editContactDetails.newNumber,
-      })
-      .then((returnedContact) => {
-        let temp = [...contacts];
-        temp[contactId] = {
-          ...temp[contactId],
-          name: returnedContact.name,
-          number: returnedContact.number,
-        };
-        setContacts(temp);
-        setNotification({
-          status: "success",
-          statusCode: "200",
-          statusText: "Updated Successfully!",
-        });
+    contactService.update(accountId, payload).then((response) => {
+      console.log(response)
 
-        setTimeout(() => {
-          setNotification({
-            ...notification,
-            status: null,
-          });
-        }, 2000);
+      setContacts(response.contacts)
+
+      setNotification({
+        status: "success",
+        statusCode: "200",
+        statusText: "Updated Successfully!",
       });
+
+      setTimeout(() => {
+        setNotification({
+          ...notification,
+          status: null,
+        });
+      }, 2000);
+    })
+
+    //   .then((returnedContact) => {
+    //     let temp = [...contacts];
+    //     temp[contactId] = {
+    //       ...temp[contactId],
+    //       name: returnedContact.name,
+    //       number: returnedContact.number,
+    //     };
+    //     setContacts(temp);
+
     setOpen(false);
   };
 
   const editContact = (id) => {
+    setEditContactId(id)
     const oldContactDetails = contacts.filter(el => el.id === id)[0]
     setEditContactDetails({
       ...editContactDetails,

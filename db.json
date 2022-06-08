@@ -4,7 +4,7 @@
       "username": "ifeolulesi@gmail.com",
       "contacts": [
         {
-          "name": "Chinedu",
+          "name": "Ned😎",
           "number": "080273627384",
           "id": 1
         },
@@ -19,7 +19,7 @@
           "id": 3
         },
         {
-          "name": "Jack",
+          "name": "Jack Sparrow",
           "number": "1212",
           "id": 4
         },
@@ -27,6 +27,26 @@
           "name": "Chuks",
           "number": "020283",
           "id": 5
+        },
+        {
+          "name": "Philip",
+          "number": "08169979009",
+          "id": 6
+        },
+        {
+          "name": "Jennifer",
+          "number": "1",
+          "id": 7
+        },
+        {
+          "name": "Bob",
+          "number": "2322",
+          "id": 8
+        },
+        {
+          "name": "Olumide",
+          "number": "2313",
+          "id": 9
         }
       ],
       "id": 1
