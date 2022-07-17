@@ -150,42 +150,76 @@ const Contacts = ({ user }) => {
         `Do you want to delete ${contacts[oldContactIndex].name} - ${contacts[oldContactIndex].number}`
       )
     ) {
-      contactService
-        .deleteContact(id)
-        .then(() => {
+      let oldContacts = [...contacts]
+      oldContacts.splice(oldContactIndex, 1)
+      
+      const newContactDetails = {
+        ...newContactDetails,
+        contacts: [
+          ...oldContacts,
+        ]
+      }
 
-          const newContacts = contacts.filter((el) => el.id !== id);
-          setContacts(newContacts);
-          setNotification({
-            status: "success",
-            statusCode: 200,
-            statusText: "Deleted Successfully",
-          });
-          setTimeout(() => {
-            setNotification({
-              ...notification,
-              status: null,
-            });
-          }, 2000);
-          setFilterQuery("");
-        })
-        .catch(() => {
-          setNotification({
-            status: "error",
-            statusCode: 200,
-            statusText: "Contact has already been deleted",
-          });
-          setTimeout(() => {
-            setNotification({
-              ...notification,
-              status: null,
-            });
-          }, 2000);
+      const updateIdArray = accounts.filter(account => account.username = user.email)
+      let updateId = 0
+      if (updateIdArray.length > 0) {
+        updateId = updateIdArray[0].id;
+      }
 
-          // remove from contacts
-          console.log(contacts, id)
-          setContacts(contacts.filter((el) => el.id !== id))
+      contactService.update(updateId, newContactDetails).then((response) => {
+        console.log(response)
+
+        setNotification({
+          status: "success",
+          statusCode: 200,
+          statusText: "Deleted Successfully",
         });
+        setTimeout(() => {
+          setNotification({
+            ...notification,
+            status: null,
+          });
+        }, 2000);
+      })
+
+
+      // contactService.update(id, )
+      // contactService
+      //   .deleteContact(id)
+      //   .then(() => {
+
+      //     const newContacts = contacts.filter((el) => el.id !== id);
+      //     setContacts(newContacts);
+      //     setNotification({
+      //       status: "success",
+      //       statusCode: 200,
+      //       statusText: "Deleted Successfully",
+      //     });
+      //     setTimeout(() => {
+      //       setNotification({
+      //         ...notification,
+      //         status: null,
+      //       });
+      //     }, 2000);
+      //     setFilterQuery("");
+      //   })
+      //   .catch(() => {
+      //     setNotification({
+      //       status: "error",
+      //       statusCode: 200,
+      //       statusText: "Contact has already been deleted",
+      //     });
+      //     setTimeout(() => {
+      //       setNotification({
+      //         ...notification,
+      //         status: null,
+      //       });
+      //     }, 2000);
+
+      //     // remove from contacts
+      //     console.log(contacts, id)
+      //     setContacts(contacts.filter((el) => el.id !== id))
+      //   });
     }
   };
 
