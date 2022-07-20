@@ -29,7 +29,7 @@ const ShowContacts = ({ contacts, filterQuery, deleteContact, editContact }) => 
       .includes(filterQuery.toLowerCase())
   )
 
-  let sortedFilteredContacts;
+  let sortedFilteredContacts = [];
   if (filteredContacts.length > 0) {
     sortedFilteredContacts = filteredContacts.sort((a, b) => a.name > b.name ? 1 : -1)
   }

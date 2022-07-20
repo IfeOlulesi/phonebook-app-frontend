@@ -1,17 +1,14 @@
 {
   "accounts": [
     {
+      "id": 1,
       "username": "ifeolulesi@gmail.com",
+      "contactIdCount": 11,
       "contacts": [
         {
           "name": "Ned😎",
           "number": "080273627384",
           "id": 1
-        },
-        {
-          "name": "Trust Charles",
-          "number": "233",
-          "id": 2
         },
         {
           "name": "Maxwell Obi",
@@ -24,7 +21,7 @@
           "id": 4
         },
         {
-          "name": "Chuks",
+          "name": "",
           "number": "020283",
           "id": 5
         },
@@ -34,31 +31,21 @@
           "id": 6
         },
         {
-          "name": "Jennifer",
-          "number": "1",
-          "id": 7
-        },
-        {
-          "name": "Bob",
-          "number": "2322",
-          "id": 8
-        },
-        {
           "name": "Olumide",
           "number": "2313",
           "id": 9
         },
         {
           "name": "Giddy Keys🎹🎺",
-          "number": "10101",
+          "number": "",
           "id": 10
         }
-      ],
-      "id": 1
+      ]
     },
     {
-      "username": "22nd.game@gmail.com",
       "id": 2,
+      "username": "22nd.game@gmail.com",
+      "contactIdCount": 9,
       "contacts": [
         {
           "name": "Bob Gifiny",
@@ -74,8 +61,84 @@
           "name": "Chuks",
           "number": "02028374632",
           "id": 3
+        },
+        {
+          "name": "Farinde",
+          "number": "928092",
+          "id": 5
+        },
+        {
+          "name": "asdf",
+          "number": "232",
+          "id": 8
         }
       ]
+    },
+    {
+      "username": "ifeoluwapo.abimbola-olulesi@student.aul.edu.ng",
+      "contactIdCount": 9,
+      "contacts": [
+        {
+          "name": "Shedrach",
+          "number": "09283",
+          "id": 1
+        },
+        {
+          "name": "Bod",
+          "number": "821",
+          "id": 2
+        },
+        {
+          "name": "Chinemerem",
+          "number": "29372",
+          "id": 8
+        },
+        {
+          "name": "Keke",
+          "number": "8273",
+          "id": 9
+        }
+      ],
+      "id": 3
+    },
+    {
+      "username": "test2@phoneme.com",
+      "contactIdCount": 7,
+      "contacts": [
+        {
+          "name": "Jack Sparrow",
+          "number": "827392",
+          "id": 1
+        },
+        {
+          "name": "Blossom",
+          "number": "13579",
+          "id": 4
+        },
+        {
+          "name": "Segun Power",
+          "number": "8923434",
+          "id": 5
+        },
+        {
+          "name": "Solomon",
+          "number": "234",
+          "id": 7
+        }
+      ],
+      "id": 5
+    },
+    {
+      "username": "test@phoneme.com",
+      "contactIdCount": 1,
+      "contacts": [
+        {
+          "name": "Sharp",
+          "number": "2323dfd",
+          "id": 1
+        }
+      ],
+      "id": 6
     }
   ]
 }
