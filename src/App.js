@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import './index.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
-import { makeStyles } from "@material-ui/styles";
+// import { makeStyles } from "@material-ui/styles";
 
 import LoadingOverlay from "./components/LoadingOverlay";
 
@@ -12,19 +12,19 @@ import Banking from "./components/Banking/Banking";
 import Login from "./components/Login/Login";
 import Profile from "./components/Profile/Profile";
 
-const useStyles = makeStyles((theme) => ({
-  loaderWrapper: {
-    display: "flex",
-    width: "100vw",
-    height: "100vh",
-    flexDirection: "row",
-  }
-}))
+// const useStyles = makeStyles((theme) => ({
+//   loaderWrapper: {
+//     display: "flex",
+//     width: "100vw",
+//     height: "100vh",
+//     flexDirection: "row",
+//   }
+// }))
 
 const App = () => {
   const { isAuthenticated, user, isLoading } = useAuth0();
   
-  const classes = useStyles();
+  // const classes = useStyles();
 
   if (isLoading) {
     return <LoadingOverlay />

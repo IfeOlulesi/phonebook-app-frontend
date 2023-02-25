@@ -7,7 +7,7 @@ import ShowContacts from "./ShowContacts";
 import Notification from "./Notification";
 import FormDialog from "./FormDialog";
 
-import { useAuth0 } from "@auth0/auth0-react";
+// import { useAuth0 } from "@auth0/auth0-react";
 
 const Contacts = ({ user }) => {
   // const { isLoading } = useAuth0();
@@ -35,34 +35,41 @@ const Contacts = ({ user }) => {
   const [open, setOpen] = useState(false);
  
   useEffect(() => { 
-    contactService.getAll().then((allAccounts) => setAccounts(allAccounts));
+    // contactService.getAll().then((allAccounts) => setAccounts(allAccounts));
 
+    //  ===========================
+    contactService.getAll().then((contacts) => {
+      console.log("All contacts", contacts)
+      setContacts(contacts)
+    })
+    //  ===========================
+    
     return () => {
       setTriggerAccountFetch(false);
     }
   }, [triggerAccountFetch]);
 
-  useEffect(() => {
-    if (accounts.length > 0) {
-      const accExists = accounts.filter( el => el.username === user.email);
-      if (accExists.length > 0) {
-        setContacts(accExists[0].contacts);
-        setCurrentUser(accExists[0]);
-      }
-      else { // create new contact
-        contactService.create({
-          username: user.email,
-          contactIdCount: 0,
-          contacts: [],
-        }).then((res) =>{
-          setTriggerAccountFetch(true);
-        });
-      }
-    }
-  }, [accounts]);
+  // useEffect(() => {
+  //   if (accounts.length > 0) {
+  //     const accExists = accounts.filter( el => el.username === user.email);
+  //     if (accExists.length > 0) {
+  //       setContacts(accExists[0].contacts);
+  //       setCurrentUser(accExists[0]);
+  //     }
+  //     else { // create new contact
+  //       contactService.create({
+  //         username: user.email,
+  //         contactIdCount: 0,
+  //         contacts: [],
+  //       }).then((res) =>{
+  //         setTriggerAccountFetch(true);
+  //       });
+  //     }
+  //   }
+  // }, [accounts]);
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event) => {  // save a new contact
     event.preventDefault();
     const contactNameExists = contacts.findIndex((el) => el.name === newName);
     const contactNumberExists = contacts.findIndex(
@@ -112,28 +119,32 @@ const Contacts = ({ user }) => {
       setNewNumber("");
     } 
     else { // to add a new contact to an existing account
-      var userDetails = accounts.filter(acc => acc.username === user.email)[0]; 
+      // var userDetails = accounts.filter(acc => acc.username === user.email)[0]; 
 
-      const newContactDetails = {
-        username: user.email,
-        contactIdCount: userDetails.contactIdCount + 1,
-        contacts: [
-          ...contacts,
-          {
-            name: newName,
-            number: newNumber,
-            id:  userDetails.contactIdCount + 1,
-          }
-        ]
-      }
+      // const newContactDetails = {
+      //   username: user.email,
+      //   contactIdCount: userDetails.contactIdCount + 1,
+      //   contacts: [
+      //     ...contacts,
+      //     {
+      //       name: newName,
+      //       number: newNumber,
+      //       id:  userDetails.contactIdCount + 1,
+      //     }
+      //   ]
+      // }
 
-      const updateIdArray = accounts.filter(account => account.username === user.email)
-      let updateId = 0
-      if (updateIdArray.length > 0) {
-        updateId = updateIdArray[0].id;
-      }
+      // const updateIdArray = accounts.filter(account => account.username === user.email)
+      // let updateId = 0
+      // if (updateIdArray.length > 0) {
+      //   updateId = updateIdArray[0].id;
+      // }
 
-      contactService.update(updateId, newContactDetails).then((response) => {
+      // contactService.update(updateId, newContactDetails).then((response) => {
+      contactService.create({
+        name: newName,
+        number: newNumber,
+      }).then((response) => {
         setNotification({
           status: "success",
           statusCode: response.status,
@@ -145,7 +156,7 @@ const Contacts = ({ user }) => {
             status: null,
           });
         }, 2000);
-        setContacts(response.contacts) 
+        // setContacts(response.contacts) 
       })
 
       setNewName("");
@@ -170,20 +181,22 @@ const Contacts = ({ user }) => {
       let oldContacts = ([...contacts])
       oldContacts.splice(oldContactIndex, 1);
 
-      var userDetails = accounts.filter(acc => acc.username === user.email)[0];
-      userDetails = {
-        ...userDetails,
-        contacts: oldContacts,
-      }
+      // var userDetails = accounts.filter(acc => acc.username === user.email)[0];
+      // userDetails = {
+      //   ...userDetails,
+      //   contacts: oldContacts,
+      // }
 
-      const updateIdArray = accounts.filter(account => account.username === user.email)
-      let updateId = 0
-      if (updateIdArray.length > 0) {
-        updateId = updateIdArray[0].id;
-      }
+      // const updateIdArray = accounts.filter(account => account.username === user.email)
+      // let updateId = 0
+      // if (updateIdArray.length > 0) {
+      //   updateId = updateIdArray[0].id;
+      // }
 
-      contactService.update(updateId, userDetails).then((response) => {
-        setContacts(response.contacts)
+      // contactService.update(updateId, userDetails).then((response) => {
+      contactService.deleteContact(id).then((response) => {
+        // setContacts(response.contacts)
+        setContacts(response)
 
         setNotification({
           status: "success",

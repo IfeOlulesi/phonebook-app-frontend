@@ -64,9 +64,9 @@ const ShowContacts = ({ contacts, filterQuery, deleteContact, editContact }) => 
                   <Tooltip arrow title="Delete">
                     <IconButton onClick={() => deleteContact(el.id)}> <DeleteIcon fillColor={"white"} /> </IconButton> 
                   </Tooltip>
-                  <Tooltip arrow title="Edit">
+                  {/* <Tooltip arrow title="Edit">
                     <IconButton onClick={() => editContact(el.id)}> <EditIcon fillColor={"white"} /> </IconButton> 
-                  </Tooltip>
+                  </Tooltip> */}
                 </td>
               </tr>
             ))

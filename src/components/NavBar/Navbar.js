@@ -28,7 +28,7 @@ const NavBar = ({ user }) => {
     <div className="header">
       <h1 className="page-title" >Phonebook</h1>
       <div>
-        <div onClick={handleProfilePicClick}> 
+        <div onClick={handleProfilePicClick}>
           <img className="profile-pic" src={user.picture} alt={user.nickname} />
         </div>
         <Menu
@@ -39,12 +39,12 @@ const NavBar = ({ user }) => {
           onClose={handleProfilePicClose}
           TransitionComponent={Fade}
         >
-        { window.location.pathname === "/" && 
-          <MenuItem> <Link to="/profile">Profile</Link> </MenuItem> 
-        }
-        { window.location.pathname === "/profile" && 
-          <MenuItem> <Link to="/">Contacts</Link> </MenuItem> 
-        }
+          {window.location.pathname === "/" &&
+            <MenuItem> <Link to="/profile">Profile</Link> </MenuItem>
+          }
+          {window.location.pathname === "/profile" &&
+            <MenuItem> <Link to="/">Contacts</Link> </MenuItem>
+          }
           <MenuItem onClick={handleLogout}>Logout</MenuItem>
         </Menu>
       </div>
